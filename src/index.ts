@@ -182,7 +182,7 @@ function message(message: Message) {
  * Cron
  */
 function ready() {
-  setInterval(function () {
-    console.log(i++)
-  }, 2000)
+  //   setInterval(function () {
+  //     console.log(i++)
+  //   }, 2000)
 }

@@ -18,7 +18,6 @@ module.exports = {
         '@works': './src/works',
         '@tests': './src/tests',
         '@client': './src/client',
-        '@clientPuppeteer': './src/clientPuppeteer',
         '@': '.'
       }
     }],
