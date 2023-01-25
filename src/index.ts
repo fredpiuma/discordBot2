@@ -42,7 +42,7 @@ client.on(Events.MessageCreate, message)
 client.on('ready', ready)
 
 function message(message: Message) {
-  console.log('oi')
+  // console.log('oi')
   if (message.content.startsWith('!')) {
     switch (message.content) {
       case '!ping':
@@ -125,13 +125,13 @@ function message(message: Message) {
 
       try {
         const {
+          id,
           assunto,
           texto,
           data,
           datetime,
           agendado,
           cliente,
-          id,
           planejamento,
           referencia,
           status,
@@ -142,13 +142,13 @@ function message(message: Message) {
           stories,
           videos
         } = r.data
-        const exampleEmbed = new EmbedBuilder()
+        const embedPost = new EmbedBuilder()
         const fields = []
-        exampleEmbed.setColor(0x0099ff)
-        exampleEmbed.setTitle(assunto.length > 1 ? assunto : 'sem assunto')
-        if (referencia.length > 1) exampleEmbed.setURL(referencia)
-        exampleEmbed.setDescription(texto)
-        exampleEmbed.setImage(fotos[0])
+        embedPost.setColor(0x0099ff)
+        embedPost.setTitle(assunto.length > 1 ? assunto : 'sem assunto')
+        if (referencia.length > 1) embedPost.setURL(referencia)
+        if (texto) embedPost.setDescription(texto)
+        if (fotos.length) embedPost.setImage(fotos[0])
         // exampleEmbed.setTimestamp(new Date(datetime))
         if (alteracao_imagem.length > 0) {
           fields.push({ name: 'Alteração na imagem', value: alteracao_imagem })
@@ -159,11 +159,13 @@ function message(message: Message) {
         fields.push({ name: 'Cliente', value: cliente.nome, inline: true })
         fields.push({ name: 'Planejamento', value: planejamento.titulo, inline: true })
         fields.push({ name: 'Data', value: data, inline: true })
+        fields.push({ name: 'Post ID', value: id, inline: true })
+        fields.push({ name: 'Planejamento ID', value: planejamento.id, inline: true })
 
-        exampleEmbed.addFields(fields)
+        embedPost.addFields(fields)
 
         message.channel.send({
-          embeds: [exampleEmbed]
+          embeds: [embedPost]
         })
       } catch (error) {
         message.reply('Não foi possível exibir as informações deste post')
@@ -182,6 +184,7 @@ function message(message: Message) {
  * Cron
  */
 function ready() {
+  console.log('iniciado')
   //   setInterval(function () {
   //     console.log(i++)
   //   }, 2000)
